@@ -45,18 +45,24 @@ def rate_password(password):
     return password_rating
 
 
+ask = urwid.Edit('Введите пароль: ', mask='*')
+reply = urwid.Text("")
+button = urwid.Button('Exit')
+menu = urwid.Pile([ask, reply, button])
+menu = urwid.Filler(menu, valign='top')
+
+
 def on_ask_change(edit, new_edit_text):
     reply.set_text(f"Рейтинг пароля: {rate_password(new_edit_text)}")
 
 
-ask = urwid.Edit('Введите пароль: ', mask='*')
-reply = urwid.Text("")
-menu = urwid.Pile([ask, reply])
-menu = urwid.Filler(menu, valign='top')
+def on_exit_clicked(button):
+    raise urwid.ExitMainLoop()
 
 
 def main():
     urwid.connect_signal(ask, 'change', on_ask_change)
+    urwid.connect_signal(button, 'click', on_exit_clicked)
     urwid.MainLoop(menu).run()
 
 
