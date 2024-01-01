@@ -1,8 +1,6 @@
 from __future__ import annotations
 import urwid
 
-reply = urwid.Text("")
-
 
 def check_password_length(password):
     password_length = len(password)
@@ -53,7 +51,8 @@ def on_exit_clicked(button):
     raise urwid.ExitMainLoop()
 
 
-def main():
+if __name__ == "__main__":
+    reply = urwid.Text("")
     button = urwid.Button('Exit')
     ask = urwid.Edit('Введите пароль: ', mask='*')
     menu = urwid.Pile([ask, reply, button])
@@ -61,7 +60,3 @@ def main():
     urwid.connect_signal(ask, 'change', on_ask_change)
     urwid.connect_signal(button, 'click', on_exit_clicked)
     urwid.MainLoop(menu).run()
-
-
-if __name__ == "__main__":
-    main()
