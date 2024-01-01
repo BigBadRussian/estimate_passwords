@@ -1,12 +1,12 @@
 from __future__ import annotations
 import urwid
 
+reply = urwid.Text("")
+
 
 def check_password_length(password):
     password_length = len(password)
-    if password_length > 12:
-        return True
-    return False
+    return password_length > 12
 
 
 def find_any_digit(password):
@@ -45,13 +45,6 @@ def rate_password(password):
     return password_rating
 
 
-ask = urwid.Edit('Введите пароль: ', mask='*')
-reply = urwid.Text("")
-button = urwid.Button('Exit')
-menu = urwid.Pile([ask, reply, button])
-menu = urwid.Filler(menu, valign='top')
-
-
 def on_ask_change(edit, new_edit_text):
     reply.set_text(f"Рейтинг пароля: {rate_password(new_edit_text)}")
 
@@ -61,6 +54,10 @@ def on_exit_clicked(button):
 
 
 def main():
+    button = urwid.Button('Exit')
+    ask = urwid.Edit('Введите пароль: ', mask='*')
+    menu = urwid.Pile([ask, reply, button])
+    menu = urwid.Filler(menu, valign='top')
     urwid.connect_signal(ask, 'change', on_ask_change)
     urwid.connect_signal(button, 'click', on_exit_clicked)
     urwid.MainLoop(menu).run()
