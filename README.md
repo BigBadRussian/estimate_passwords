@@ -18,3 +18,4 @@ pip install -r requirements.txt
 ```bash
 python3 script_1.py
 ```
+Кнопка Exit кликабельна.
